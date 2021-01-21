@@ -14,10 +14,10 @@ class BaseRestCerberusValidator(Component):
             _usage = "cerberus.validator"
             _collection = "mycollection"
 
-            def get_validator_handler(self, service, method_name):
+            def get_validator_handler(self, service, method_name, direction):
                 # customize
 
-            def has_validator_handler(self, service, method_name):
+            def has_validator_handler(self, service, method_name, direction):
                 # customize
 
     """
