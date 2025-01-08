@@ -1,8 +1,10 @@
 # Copyright 2022 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/LGPL).
 
+import asyncio
 import logging
 from collections.abc import Callable
+import threading
 from functools import partial
 from itertools import chain
 from typing import Any
@@ -18,6 +20,26 @@ from fastapi import APIRouter, Depends, FastAPI
 from .. import dependencies
 
 _logger = logging.getLogger(__name__)
+
+
+# Thread-local storage for event loops
+# Using a thread-local storage allows to have a dedicated event loop per thread
+# and avoid the need to create a new event loop for each request. It's also
+# compatible with the multi-worker mode of Odoo.
+_event_loop_storage = threading.local()
+
+
+def get_or_create_event_loop() -> asyncio.AbstractEventLoop:
+    """
+    Get or create a reusable event loop for the current thread.
+    """
+    if not hasattr(_event_loop_storage, "loop"):
+        loop = asyncio.new_event_loop()
+        loop_thread = threading.Thread(target=loop.run_forever, daemon=True)
+        loop_thread.start()
+        _event_loop_storage.loop = loop
+        _event_loop_storage.thread = loop_thread
+    return _event_loop_storage.loop
 
 
 class FastapiEndpoint(models.Model):
@@ -214,7 +236,8 @@ class FastapiEndpoint(models.Model):
         app = FastAPI()
         app.mount(record.root_path, record._get_app())
         self._clear_fastapi_exception_handlers(app)
-        return ASGIMiddleware(app)
+        event_loop = get_or_create_event_loop()
+        return ASGIMiddleware(app, loop=event_loop)
 
     def _clear_fastapi_exception_handlers(self, app: FastAPI) -> None:
         """
