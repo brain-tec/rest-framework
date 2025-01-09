@@ -14,6 +14,11 @@ from .pools import fastapi_app_pool
 class FastApiDispatcher(Dispatcher):
     routing_type = "fastapi"
 
+    def __init__(self, request):
+        super().__init__(request)
+        # Store exception to later raise it in the dispatch method if needed
+        self.inner_exception = None
+
     @classmethod
     def is_compatible_with(cls, request):
         return True
@@ -47,7 +52,6 @@ class FastApiDispatcher(Dispatcher):
     def _make_response(self, status_mapping, headers_tuple, content):
         self.status = status_mapping[:3]
         self.headers = dict(headers_tuple)
-        self.inner_exception = None
         # in case of exception, the method asgi_done_callback of the
         # ASGIResponder will trigger an "a2wsgi.error" event with the exception
         # instance stored in a tuple with the type of the exception and the traceback.
