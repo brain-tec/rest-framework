@@ -4,8 +4,8 @@
 import asyncio
 import queue
 import threading
+from collections.abc import Generator
 from contextlib import contextmanager
-from typing import Generator
 
 
 class EventLoopPool:
@@ -16,7 +16,8 @@ class EventLoopPool:
         self,
     ) -> tuple[asyncio.AbstractEventLoop, threading.Thread]:
         """
-        Get an event loop from the pool. If no event loop is available, create a new one.
+        Get an event loop from the pool. If no event loop is available,
+        create a new one.
         """
         try:
             return self.pool.get_nowait()
@@ -47,9 +48,11 @@ class EventLoopPool:
     @contextmanager
     def get_event_loop(self) -> Generator[asyncio.AbstractEventLoop, None, None]:
         """
-        Get an event loop from the pool. If no event loop is available, create a new one.
+        Get an event loop from the pool. If no event loop is available,
+        create a new one.
 
-        After the context manager exits, the event loop is returned to the pool for reuse.
+        After the context manager exits, the event loop is returned to
+        the pool for reuse.
         """
         loop, thread = self.__get_event_loop_and_thread()
         try:
