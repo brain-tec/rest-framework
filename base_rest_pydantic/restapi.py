@@ -175,7 +175,10 @@ class PydanticModelList(PydanticModel):
         if self._min_items is not None and len(values) < self._min_items:
             raise ExceptionClass(
                 _(
-                    "BadRequest: Not enough items in the list (%(current)s < %(expected)s)",
+                    (
+                        "BadRequest: Not enough items in the list (%(current)s < "
+                        "%(expected)s)"
+                    ),
                     current=len(values),
                     expected=self._min_items,
                 )
@@ -183,7 +186,10 @@ class PydanticModelList(PydanticModel):
         if self._max_items is not None and len(values) > self._max_items:
             raise ExceptionClass(
                 _(
-                    "BadRequest: Too many items in the list (%(current)s > %(expected)s)",
+                    (
+                        "BadRequest: Too many items in the list (%(current)s > "
+                        "%(expected)s)"
+                    ),
                     current=len(values),
                     expected=self._max_items,
                 )
