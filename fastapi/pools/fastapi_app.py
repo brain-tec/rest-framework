@@ -76,7 +76,6 @@ class FastApiAppPool:
         try:
             return pool.get_nowait()
         except queue.Empty:
-            env["fastapi.endpoint"].sudo()
             return env["fastapi.endpoint"].sudo().get_app(root_path)
 
     def __return_app(self, env: Environment, app: FastAPI, root_path: str) -> None:
