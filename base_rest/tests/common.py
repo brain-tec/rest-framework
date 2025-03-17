@@ -234,14 +234,8 @@ class TransactionRestServiceRegistryCase(RestServiceRegistryCase, TransactionCas
     # pylint: disable=W8106
     @classmethod
     def setUpClass(cls):
-        # resolve an inheritance issue (common.TransactionCase does not use
-        # super)
-        TransactionCase.setUpClass()
+        super().setUpClass()
         cls.base_url = cls.env["ir.config_parameter"].get_param("web.base.url")
-
-    @classmethod
-    def tearDownClass(cls):
-        TransactionCase.tearDownClass()
 
 
 class BaseRestCase(TransactionComponentCase, RegistryMixin):

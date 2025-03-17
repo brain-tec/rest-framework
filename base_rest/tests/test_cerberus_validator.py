@@ -1,6 +1,7 @@
 # Copyright 2020 ACSONE SA/NV
 # License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl).
 
+import logging
 import unittest
 
 from cerberus import Validator
@@ -49,6 +50,22 @@ class TestCerberusValidator(BaseCase, MetaCase("DummyCase", (object,), {})):
         cls.nested_schema_cerberus_validator = CerberusValidator(
             schema=cls.nested_schema
         )
+
+    def setUp(self):
+        super().setUp()
+        # mute logger
+        loggers = ["odoo.tools.translate"]
+        for logger in loggers:
+            logging.getLogger(logger).addFilter(self)
+
+        @self.addCleanup
+        def un_mute_logger():
+            for logger_ in loggers:
+                logging.getLogger(logger_).removeFilter(self)
+
+    def filter(self, record):
+        # required to mute logger
+        return 0
 
     def test_to_openapi_responses(self):
         res = self.simple_schema_cerberus_validator.to_openapi_responses(None, None)
