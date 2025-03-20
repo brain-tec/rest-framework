@@ -1,4 +1,4 @@
-This addon is deprecated and not fully supported anymore on Odoo 16.
+This addon is deprecated and not fully supported anymore from Odoo 16.
 Please migrate to the FastAPI migration module. See
 <https://github.com/OCA/rest-framework/pull/291>.
 
