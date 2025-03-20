@@ -1,7 +1,8 @@
 [project]
 name = "odoo-addons-oca-rest-framework"
-version = "18.0.20250203.0"
+version = "18.0.20250320.0"
 dependencies = [
+    "odoo-addon-base_rest==18.0.*",
     "odoo-addon-fastapi==18.0.*",
 ]
 classifiers=[

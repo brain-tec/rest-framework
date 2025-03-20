@@ -21,6 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
+[base_rest](base_rest/) | 18.0.1.0.0 |  | Develop your own high level REST APIs for Odoo thanks to this addon.
 [fastapi](fastapi/) | 18.0.1.0.0 | [![lmignon](https://github.com/lmignon.png?size=30px)](https://github.com/lmignon) | Odoo FastAPI endpoint
 
 [//]: # (end addons)
