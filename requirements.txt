@@ -2,8 +2,11 @@
 a2wsgi>=1.10.6
 apispec
 cerberus
+contextvars
 fastapi>=0.110.0
 parse-accept-language
+pydantic
 pyquerystring
 python-multipart
+typing-extensions
 ujson
