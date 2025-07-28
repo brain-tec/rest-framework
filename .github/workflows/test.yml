@@ -37,9 +37,14 @@ jobs:
         include:
           - container: ghcr.io/oca/oca-ci/py3.10-odoo17.0:latest
             name: test with Odoo
+            pydantic2: "true"
           - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
-            name: test with OCB
+            name: test with OCB and pydantic > 2.0
             makepot: "true"
+            pydantic2: "true"
+          - container: ghcr.io/oca/oca-ci/py3.10-ocb17.0:latest
+            name: test with OCB and pydantic < 2.0
+            exclude: "fastapi"
     services:
       postgres:
         image: postgres:12.0
@@ -49,6 +54,8 @@ jobs:
           POSTGRES_DB: odoo
         ports:
           - 5432:5432
+    env:
+      EXCLUDE: "${{ matrix.exclude }}"
     steps:
       - uses: actions/checkout@v4
         with:
@@ -61,6 +68,12 @@ jobs:
         run: manifestoo -d . check-dev-status --default-dev-status=Beta
       - name: Initialize test db
         run: oca_init_test_database
+      - name: Ensure pydantic version < 2
+        run: pip install "pydantic<2.0"
+        if: ${{ matrix.pydantic2 != 'true' }}
+      - name: Ensure pydantic version > 2
+        run: pip install "pydantic>2.0"
+        if: ${{ matrix.pydantic2 == 'true' }}
       - name: Run tests
         run: oca_run_tests
       - uses: codecov/codecov-action@v4
