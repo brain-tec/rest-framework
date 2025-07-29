@@ -29,7 +29,7 @@ Pydantic
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
 This addon provides a utility method that can be used to map odoo record
-to a `Pydantic model <https://docs.pydantic.dev/>`__.
+to a `Pydantic model (>= v2) <https://docs.pydantic.dev/>`__.
 
 If you need to make your Pydantic models extendable at runtime, takes a
 look at the python package
@@ -49,10 +49,8 @@ To support pydantic models that map to Odoo models, Pydantic model
 instances can be created from arbitrary odoo model instances by mapping
 fields from odoo models to fields defined by the pydantic model.
 
-To ease the mapping, the addon provide 2 utility classes:
-
-- Using ``pydantic>2.0``,
-  ``odoo.addons.pydantic.utils.PydanticOdooBaseModel``:
+To ease the mapping, the addon provide an utility class (using
+``pydantic>2.0``) ``odoo.addons.pydantic.utils.PydanticOdooBaseModel``:
 
 .. code:: python
 
@@ -65,32 +63,6 @@ To ease the mapping, the addon provide 2 utility classes:
    class UserInfo(PydanticOdooBaseModel):
        name: str
        groups: List[Group] = pydantic.Field(alias="groups_id")
-
-   user = self.env.user
-   user_info = UserInfo.from_orm(user)
-
-- Using ``pydantic<2.0``,
-  ``odoo.addons.pydantic.utils.GenericOdooGetter``:
-
-.. code:: python
-
-   import pydantic
-   from odoo.addons.pydantic import utils
-
-   class Group(pydantic.BaseModel):
-       name: str
-
-       class Config:
-           orm_mode = True
-           getter_dict = utils.GenericOdooGetter
-
-   class UserInfo(pydantic.BaseModel):
-       name: str
-       groups: List[Group] = pydantic.Field(alias="groups_id")
-
-       class Config:
-           orm_mode = True
-           getter_dict = utils.GenericOdooGetter
 
    user = self.env.user
    user_info = UserInfo.from_orm(user)
