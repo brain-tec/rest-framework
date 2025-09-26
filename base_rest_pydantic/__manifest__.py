@@ -13,6 +13,8 @@
     "external_dependencies": {
         "python": [
             "pydantic>=2.0.0",
-        ]
-    },
+        ],
+    'installable': False,
+},
+    'installable': False,
 }
