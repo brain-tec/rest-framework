@@ -127,7 +127,7 @@ def basic_auth_user(
                     "login": username,
                     "password": password,
                 },
-                user_agent_env=None,
+                user_agent_env={"interactive": False},
             )
         )
         return env["res.users"].browse(response.get("uid"))
