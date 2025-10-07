@@ -5,8 +5,8 @@ import os
 import unittest
 from contextlib import contextmanager
 
-from odoo import sql_db
 from odoo.tests.common import HttpCase
+from odoo.tests.test_cursor import TestCursor
 from odoo.tools import mute_logger
 
 from fastapi import status
@@ -35,7 +35,7 @@ class FastAPIHttpCase(HttpCase):
     @contextmanager
     def _mocked_commit(self):
         with unittest.mock.patch.object(
-            sql_db.TestCursor, "commit", return_value=None
+            TestCursor, "commit", return_value=None
         ) as mocked_commit:
             yield mocked_commit
 
@@ -156,7 +156,9 @@ class FastAPIHttpCase(HttpCase):
             route = "/fastapi_demo/demo/exception?exception_type=BAD&error_message="
             response = self.url_open(route, timeout=200)
             mocked_commit.assert_not_called()
-            self.assertEqual(response.status_code, status.HTTP_422_UNPROCESSABLE_ENTITY)
+            self.assertEqual(
+                response.status_code, status.HTTP_422_UNPROCESSABLE_CONTENT
+            )
 
     def test_no_commit_on_exception(self) -> None:
         # this test check that the way we mock the cursor is working as expected
