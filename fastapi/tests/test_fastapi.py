@@ -19,6 +19,7 @@ class FastAPIHttpCase(HttpCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env["fastapi.endpoint"]._load_demo_data()
         cls.fastapi_demo_app = cls.env.ref("fastapi.fastapi_endpoint_demo")
         cls.fastapi_multi_demo_app = cls.env.ref(
             "fastapi.fastapi_endpoint_multislash_demo"

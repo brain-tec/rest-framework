@@ -11,6 +11,7 @@ from starlette.middleware import Middleware
 from starlette.routing import Mount
 
 from odoo import api, exceptions, fields, models, tools
+from odoo.tools import convert
 
 from fastapi import APIRouter, Depends, FastAPI
 
@@ -338,3 +339,19 @@ class FastapiEndpoint(models.Model):
     def _get_fastapi_app_dependencies(self) -> list[Depends]:
         """Return the dependencies to use for the fastapi app."""
         return [Depends(dependencies.accept_language)]
+
+    # test utility
+    @api.model
+    def has_demo_data(self):
+        return (
+            self.env.ref("fastapi.fastapi_endpoint_demo", raise_if_not_found=False)
+            is not None
+        )
+
+    def _load_demo_data(self):
+        if self.has_demo_data():
+            return
+        # Load demo data
+        convert.convert_file(
+            self.env, "fastapi", "demo/fastapi_endpoint_demo.xml", None, mode="init"
+        )

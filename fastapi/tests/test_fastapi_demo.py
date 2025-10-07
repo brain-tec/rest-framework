@@ -32,6 +32,7 @@ class FastAPIDemoCase(FastAPITransactionCase):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
+        cls.env["fastapi.endpoint"]._load_demo_data()
         cls.default_fastapi_router = demo_router
         cls.default_fastapi_running_user = cls.env.ref("fastapi.my_demo_app_user")
         cls.default_fastapi_authenticated_partner = cls.env["res.partner"].create(
@@ -67,7 +68,7 @@ class FastAPIDemoCase(FastAPITransactionCase):
         ) as test_client:
             response: Response = test_client.get("/demo/who_ami", auth=("demo", "demo"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        partner = self.env.ref("base.partner_demo")
+        partner = self.partner_demo
         self.assertDictEqual(
             response.json(),
             {

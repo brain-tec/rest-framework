@@ -12,10 +12,10 @@ from starlette.responses import JSONResponse, Response
 
 from odoo.api import Environment
 from odoo.tests import tagged
-from odoo.tests.common import TransactionCase
 
 from odoo.addons.base.models.res_partner import ResPartner
 from odoo.addons.base.models.res_users import ResUsers
+from odoo.addons.base.tests.common import TransactionCaseWithUserDemo
 
 from fastapi import APIRouter, FastAPI
 from fastapi.testclient import TestClient
@@ -47,7 +47,7 @@ def default_exception_handler(request: Request, exc: Exception) -> Response:
 
 
 @tagged("post_install", "-at_install")
-class FastAPITransactionCase(TransactionCase):
+class FastAPITransactionCase(TransactionCaseWithUserDemo):
     """
     This class is a base class for FastAPI tests.
 
