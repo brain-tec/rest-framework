@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ============
 Partner Auth
 ============
@@ -17,33 +13,40 @@ Partner Auth
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frest--framework-lightgray.png?logo=github
-    :target: https://github.com/OCA/rest-framework/tree/16.0/auth_partner
+    :target: https://github.com/OCA/rest-framework/tree/18.0/auth_partner
     :alt: OCA/rest-framework
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rest-framework-16-0/rest-framework-16-0-auth_partner
+    :target: https://translation.odoo-community.org/projects/rest-framework-18-0/rest-framework-18-0-auth_partner
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/rest-framework&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/rest-framework&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module adds to the partners the ability to authenticate through directories.
+This module adds to the partners the ability to authenticate through
+directories.
 
-This module does not implement any routing, it only provides the basic mechanisms in a directory for:
+This module does not implement any routing, it only provides the basic
+mechanisms in a directory for:
 
-  - Registering a partner and sending an welcome email (to validate email address): `_signup`
-  - Authenticating a partner: `_login`
-  - Validating a partner email using a token: `_validate_email`
-  - Impersonating: `_impersonate`, `_impersonating`
-  - Resetting the password with a unique token sent by mail: `_request_reset_password`, `_set_password`
-  - Sending an invite mail when registering a partner from odoo interface for the partner to enter a password: `_send_invite`, `_set_password`
-  
-For a routing implementation, see the `fastapi_auth_partner <../fastapi_auth_partner>`_ module.
+   - Registering a partner and sending an welcome email (to validate
+     email address): \_signup
+   - Authenticating a partner: \_login
+   - Validating a partner email using a token: \_validate_email
+   - Impersonating: \_impersonate, \_impersonating
+   - Resetting the password with a unique token sent by mail:
+     \_request_reset_password, \_set_password
+   - Sending an invite mail when registering a partner from odoo
+     interface for the partner to enter a password: \_send_invite,
+     \_set_password
+
+For a routing implementation, see the
+`fastapi_auth_partner <../fastapi_auth_partner>`__ module.
 
 **Table of contents**
 
@@ -53,7 +56,8 @@ For a routing implementation, see the `fastapi_auth_partner <../fastapi_auth_par
 Usage
 =====
 
-This module isn't meant to be used standalone but you can still see the directories and authenticable partners in:
+This module isn't meant to be used standalone but you can still see the
+directories and authenticable partners in:
 
 Settings > Technical > Partner Authentication > Partner
 
@@ -61,14 +65,13 @@ and
 
 Settings > Technical > Partner Authentication > Directory
 
-
 Bug Tracker
 ===========
 
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rest-framework/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rest-framework/issues/new?body=module:%20auth_partner%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rest-framework/issues/new?body=module:%20auth_partner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -76,20 +79,20 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Akretion <https://www.akretion.com>`_:
+- `Akretion <https://www.akretion.com>`__:
 
-  * Sébastien Beau
-  * Florian Mounier
+  - Sébastien Beau
+  - Florian Mounier
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -101,6 +104,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/rest-framework <https://github.com/OCA/rest-framework/tree/16.0/auth_partner>`_ project on GitHub.
+This module is part of the `OCA/rest-framework <https://github.com/OCA/rest-framework/tree/18.0/auth_partner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

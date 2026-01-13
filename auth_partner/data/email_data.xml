@@ -13,10 +13,10 @@
             Hi <t t-out="object.partner_id.name or ''" />
             Click on the following link to reset your password
             <a
-                    t-attf-href="https://example.org/password/reset?token={{ object.env.context['token']}}"
-                    target="_blank"
-                    style="color:#FFFFFF; text-decoration:none;"
-                >Reset Password</a>
+                t-attf-href="https://example.org/password/reset?token={{ object.env.context['token']}}"
+                target="_blank"
+                style="color:#FFFFFF; text-decoration:none;"
+            >Reset Password</a>
             </div>
         </field>
     </record>
@@ -35,10 +35,10 @@
             Welcome, your account have been created
             Click on the following link to set your password
             <a
-                    t-attf-href="https://example.org/password/reset?token={{ object.env.context['token']}}"
-                    target="_blank"
-                    style="color:#FFFFFF; text-decoration:none;"
-                >Set Password</a>
+                t-attf-href="https://example.org/password/reset?token={{ object.env.context['token']}}"
+                target="_blank"
+                style="color:#FFFFFF; text-decoration:none;"
+            >Set Password</a>
             </div>
         </field>
     </record>
@@ -56,12 +56,11 @@
             Hi <t t-out="object.partner_id.name or ''" />
             Welcome to the site, please click on the following link to verify your email
             <a
-                    t-attf-href="https://example.org/email/validate?token={{ object.env.context['token']}}"
-                    target="_blank"
-                    style="color:#FFFFFF; text-decoration:none;"
-                >Validate Email</a>
+                t-attf-href="https://example.org/email/validate?token={{ object.env.context['token']}}"
+                target="_blank"
+                style="color:#FFFFFF; text-decoration:none;"
+            >Validate Email</a>
             </div>
         </field>
     </record>
-
 </odoo>
