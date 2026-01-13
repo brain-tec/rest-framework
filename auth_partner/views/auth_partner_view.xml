@@ -3,7 +3,7 @@
     <record id="auth_partner_view_tree" model="ir.ui.view">
         <field name="model">auth.partner</field>
         <field name="arch" type="xml">
-            <tree>
+            <list>
                 <field name="directory_id" />
                 <field name="partner_id" />
                 <field name="login" />
@@ -11,7 +11,7 @@
                 <field name="nbr_pending_reset_sent" />
                 <field name="date_last_request_reset_pwd" />
                 <field name="date_last_sucessfull_reset_pwd" />
-            </tree>
+            </list>
         </field>
     </record>
 
@@ -26,7 +26,7 @@
                         type="object"
                         string="Impersonate"
                         class="btn-info"
-                        attrs="{'invisible': [('user_can_impersonate', '=', False)]}"
+                        invisible="not user_can_impersonate"
                     />
                     <button
                         name="%(auth_partner_force_set_password_action)d"
@@ -39,7 +39,6 @@
                 <sheet>
                     <div class="oe_title">
                         <h1>
-                            <field name="user_can_impersonate" invisible="1" />
                             <field name="partner_id" />
                         </h1>
                     </div>
@@ -77,7 +76,7 @@
         <field name="name">Partner</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">auth.partner</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
         <field name="search_view_id" ref="auth_partner_view_search" />
         <field name="domain">[]</field>
         <field name="context">{}</field>

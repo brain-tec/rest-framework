@@ -8,7 +8,7 @@ from datetime import timedelta
 
 import passlib
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import AccessDenied
 
 # please read passlib great documentation
@@ -67,7 +67,8 @@ class AuthPartner(models.Model):
     )
 
     mail_verified = fields.Boolean(
-        help="This field is set to True when the user has clicked on the link sent by email"
+        help="This field is set to True when the user has clicked on the link "
+        "sent by email"
     )
 
     _sql_constraints = [
@@ -96,7 +97,7 @@ class AuthPartner(models.Model):
             raise AccessDenied()
 
     def _get_hashed_password(self, directory, login):
-        self.flush()
+        self.flush_model()
         self.env.cr.execute(
             """
             SELECT id, COALESCE(encrypted_password, '')
@@ -170,11 +171,11 @@ class AuthPartner(models.Model):
             auth_partner = None
 
         if not auth_partner or not auth_partner.partner_id.active:
-            raise AccessDenied(_("Invalid Login or Password"))
+            raise AccessDenied(self.env._("Invalid Login or Password"))
 
         if directory.sudo().force_verified_email and not auth_partner.mail_verified:
             raise AccessDenied(
-                _(
+                self.env._(
                     "Email address not validated. Validate your email address by "
                     "clicking on the link in the email sent to you or request a new "
                     "password. "
@@ -210,7 +211,9 @@ class AuthPartner(models.Model):
     def impersonate(self):
         self.ensure_one()
         if self.env.user not in self.impersonating_user_ids:
-            raise AccessDenied(_("You are not allowed to impersonate this user"))
+            raise AccessDenied(
+                self.env._("You are not allowed to impersonate this user")
+            )
 
         token = self._generate_impersonating_token()
         return self._get_impersonate_action(token)

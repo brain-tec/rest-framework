@@ -3,7 +3,7 @@
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
 
-from odoo import _, api, fields, models
+from odoo import api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 
@@ -19,16 +19,14 @@ class WizardAuthPartnerForceSetPassword(models.TransientModel):
         for wizard in self:
             if wizard.password != wizard.password_confirm:
                 raise ValidationError(
-                    _("Password and Confirm Password must be the same")
+                    self.env._("Password and Confirm Password must be the same")
                 )
 
     def action_force_set_password(self):
         self.ensure_one()
-        if self.env.context.get("active_model") != "auth.partner":
-            raise UserError(_("This wizard can only be used on auth.partner"))
-        auth_partner_id = self.env.context.get("active_id")
+        auth_partner_id = self.env.context.get("id")
         if not auth_partner_id:
-            raise UserError(_("No active_id in context"))
+            raise UserError(self.env._("No id in context"))
 
         auth_partner = self.env["auth.partner"].browse(auth_partner_id)
 

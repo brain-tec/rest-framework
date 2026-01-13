@@ -6,7 +6,7 @@
 {
     "name": "Partner Auth",
     "summary": "Implements the base features for a authenticable partner",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rest-framework",
@@ -19,7 +19,6 @@
     "data": [
         "security/res_group.xml",
         "security/ir.model.access.csv",
-        "security/ir_rule.xml",
         "data/email_data.xml",
         "wizards/wizard_auth_partner_force_set_password_view.xml",
         "wizards/wizard_auth_partner_reset_password_view.xml",

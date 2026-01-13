@@ -11,10 +11,14 @@
                     icon="fa-user"
                     type="action"
                     groups="auth_partner.group_auth_partner_manager"
-                    context="{'search_default_partner_id': active_id}"
+                    context="{'search_default_partner_id': id}"
                 >
-                    <field name="auth_partner_count" />
-                    Account
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value">
+                            <field name="auth_partner_count" />
+                        </span>
+                        <span class="o_stat_text">Accounts</span>
+                    </div>
                 </button>
             </div>
         </field>

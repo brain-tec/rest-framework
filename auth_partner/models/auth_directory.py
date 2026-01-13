@@ -8,7 +8,7 @@ from secrets import token_urlsafe
 
 import jwt
 
-from odoo import _, fields, models
+from odoo import fields, models
 from odoo.exceptions import UserError
 
 from odoo.addons.queue_job.delay import chain
@@ -86,18 +86,17 @@ class AuthDirectory(models.Model):
         self.secret_key = self._generate_default_secret_key()
 
     def _compute_count_partner(self):
-        data = self.env["auth.partner"].read_group(
+        data = self.env["auth.partner"]._read_group(
             [
                 ("directory_id", "in", self.ids),
             ],
             ["directory_id"],
-            groupby=["directory_id"],
-            lazy=False,
+            aggregates=["__count"],
         )
-        res = {item["directory_id"][0]: item["__count"] for item in data}
+        mapped_data = {auth_partner.id: count for auth_partner, count in data}
 
         for record in self:
-            record.count_partner = res.get(record.id, 0)
+            record.count_partner = mapped_data.get(record.id, 0)
 
     def _get_template(self, type_or_template):
         if isinstance(type_or_template, str):
@@ -127,7 +126,8 @@ class AuthDirectory(models.Model):
         return job.delay()
 
     def _send_mail(self, type_or_template, auth_partner, **context):
-        """Send an email to the auth_partner using the template defined in the directory"""
+        """Send an email to the auth_partner using the template defined
+        in the directory"""
         self.ensure_one()
         auth_partner.ensure_one()
         context = self._prepare_mail_context(context)
@@ -138,7 +138,9 @@ class AuthDirectory(models.Model):
         template = self.sudo()._get_template(type_or_template)
         if not template:
             raise UserError(
-                _("No email template defined for %(template)s in %(directory)s")
+                self.env._(
+                    "No email template defined for %(template)s in %(directory)s"
+                )
                 % {"template": type_or_template, "directory": self.name}
             )
         template.sudo().with_context(**context).send_mail(
@@ -176,10 +178,10 @@ class AuthDirectory(models.Model):
                     token, algorithms=["HS256"], options={"verify_signature": False}
                 )
             except jwt.PyJWTError as e:
-                raise UserError(_("Invalid Token")) from e
+                raise UserError(self.env._("Invalid Token")) from e
             probable_auth_partner = self.env["auth.partner"].browse(obj["ap"])
             if not probable_auth_partner:
-                raise UserError(_("Invalid Token"))
+                raise UserError(self.env._("Invalid Token"))
             key += key_salt(probable_auth_partner)
 
         try:
@@ -191,7 +193,7 @@ class AuthDirectory(models.Model):
                 algorithms=["HS256"],
             )
         except jwt.PyJWTError as e:
-            raise UserError(_("Invalid Token")) from e
+            raise UserError(self.env._("Invalid Token")) from e
 
         auth_partner = self.env["auth.partner"].browse(obj["ap"])
 
@@ -200,7 +202,7 @@ class AuthDirectory(models.Model):
             or not auth_partner
             or auth_partner.directory_id != self
         ):
-            raise UserError(_("Invalid token"))
+            raise UserError(self.env._("Invalid token"))
 
         return auth_partner
 

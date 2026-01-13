@@ -397,7 +397,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/auth_partner/wizards/wizard_auth_partner_force_set_password.py:0
 #, python-format
-msgid "No active_id in context"
+msgid "No id in context"
 msgstr ""
 
 #. module: auth_partner

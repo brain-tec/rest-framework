@@ -14,7 +14,13 @@ class CommonTestAuthPartner(TransactionCase, MockEmail):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env = cls.env(context=dict(cls.env.context, queue_job__no_delay=True))
+        cls.env = cls.env(
+            context=dict(
+                cls.env.context,
+                queue_job__no_delay=True,
+                tracking_disable=True,
+            )
+        )
 
         cls.partner = cls.env.ref("auth_partner.res_partner_auth_demo")
         cls.other_partner = cls.partner.copy(
@@ -42,14 +48,15 @@ class CommonTestAuthPartner(TransactionCase, MockEmail):
         class MailsProxy(mailmail.__class__):
             __slots__ = ["_prev", "__weakref__"]
 
-            def __init__(self):
+            def __init__(self, env, ids, prefetch_ids):
+                super().__init__(env, ids, prefetch_ids)
                 object.__setattr__(self, "_prev", mailmail.search([]))
 
             def __getattribute__(self, name: str) -> Any:
                 mails = mailmail.search([]) - object.__getattribute__(self, "_prev")
                 return object.__getattribute__(mails, name)
 
-        new_mails = MailsProxy()
+        new_mails = MailsProxy(self.env, [], [])
         with self.mock_mail_gateway():
             yield new_mails
 

@@ -15,18 +15,17 @@ class ResPartner(models.Model):
     )
 
     def _compute_auth_partner_count(self):
-        data = self.env["auth.partner"].read_group(
+        data = self.env["auth.partner"]._read_group(
             [
                 ("partner_id", "in", self.ids),
             ],
             ["partner_id"],
-            groupby=["partner_id"],
-            lazy=False,
+            aggregates=["__count"],
         )
-        res = {item["partner_id"][0]: item["__count"] for item in data}
+        mapped_data = {auth_partner.id: count for auth_partner, count in data}
 
         for record in self:
-            record.auth_partner_count = res.get(record.id, 0)
+            record.auth_partner_count = mapped_data.get(record.id, 0)
 
     def _get_auth_partner_for_directory(self, directory):
         return self.sudo().auth_partner_ids.filtered(
