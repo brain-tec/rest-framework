@@ -4,7 +4,7 @@
 
 import logging
 import sys
-from typing import Any, Dict, Union
+from typing import Any
 
 from itsdangerous import URLSafeTimedSerializer
 from starlette.status import HTTP_401_UNAUTHORIZED
@@ -20,12 +20,12 @@ from fastapi import Cookie, Depends, HTTPException, Request, Response
 if sys.version_info >= (3, 9):
     from typing import Annotated
 else:
-    from typing_extensions import Annotated
+    from typing import Annotated
 
 _logger = logging.getLogger(__name__)
 
 
-Payload = Dict[str, Any]
+Payload = dict[str, Any]
 
 
 class AuthPartner:
@@ -41,7 +41,7 @@ class AuthPartner:
             Depends(odoo_env),
         ],
         endpoint: Annotated[FastapiEndpoint, Depends(fastapi_endpoint)],
-        fastapi_auth_partner: Annotated[Union[str, None], Cookie()] = None,
+        fastapi_auth_partner: Annotated[str | None, Cookie()] = None,
     ) -> Partner:
         if not fastapi_auth_partner and self.allow_unauthenticated:
             return env["res.partner"].with_user(env.ref("base.public_user")).browse()

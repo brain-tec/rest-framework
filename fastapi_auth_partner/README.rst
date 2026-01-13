@@ -1,7 +1,3 @@
-.. image:: https://odoo-community.org/readme-banner-image
-   :target: https://odoo-community.org/get-involved?utm_source=readme
-   :alt: Odoo Community Association
-
 ====================
 Fastapi Auth Partner
 ====================
@@ -17,23 +13,24 @@ Fastapi Auth Partner
 .. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
     :alt: Beta
-.. |badge2| image:: https://img.shields.io/badge/license-AGPL--3-blue.png
+.. |badge2| image:: https://img.shields.io/badge/licence-AGPL--3-blue.png
     :target: http://www.gnu.org/licenses/agpl-3.0-standalone.html
     :alt: License: AGPL-3
 .. |badge3| image:: https://img.shields.io/badge/github-OCA%2Frest--framework-lightgray.png?logo=github
-    :target: https://github.com/OCA/rest-framework/tree/16.0/fastapi_auth_partner
+    :target: https://github.com/OCA/rest-framework/tree/18.0/fastapi_auth_partner
     :alt: OCA/rest-framework
 .. |badge4| image:: https://img.shields.io/badge/weblate-Translate%20me-F47D42.png
-    :target: https://translation.odoo-community.org/projects/rest-framework-16-0/rest-framework-16-0-fastapi_auth_partner
+    :target: https://translation.odoo-community.org/projects/rest-framework-18-0/rest-framework-18-0-fastapi_auth_partner
     :alt: Translate me on Weblate
 .. |badge5| image:: https://img.shields.io/badge/runboat-Try%20me-875A7B.png
-    :target: https://runboat.odoo-community.org/builds?repo=OCA/rest-framework&target_branch=16.0
+    :target: https://runboat.odoo-community.org/builds?repo=OCA/rest-framework&target_branch=18.0
     :alt: Try me on Runboat
 
 |badge1| |badge2| |badge3| |badge4| |badge5|
 
-This module is the FastAPI implementation of `auth_partner <../auth_partner>`_ 
-it provides all the routes to manage the authentication of partners.
+This module is the FastAPI implementation of
+`auth_partner <../auth_partner>`__ it provides all the routes to manage
+the authentication of partners.
 
 **Table of contents**
 
@@ -43,37 +40,39 @@ it provides all the routes to manage the authentication of partners.
 Usage
 =====
 
-First you have to add the auth router to your FastAPI endpoint and the authentication dependency to your app dependencies:
+First you have to add the auth router to your FastAPI endpoint and the
+authentication dependency to your app dependencies:
 
-.. code-block:: python
+.. code:: python
 
-    from odoo.addons.fastapi import dependencies
-    from odoo.addons.fastapi_auth_partner.dependencies import (
-      auth_partner_authenticated_partner,
-    )
-    from odoo.addons.fastapi_auth_partner.routers.auth import auth_router
+   from odoo.addons.fastapi import dependencies
+   from odoo.addons.fastapi_auth_partner.dependencies import (
+     auth_partner_authenticated_partner,
+   )
+   from odoo.addons.fastapi_auth_partner.routers.auth import auth_router
 
-    class FastapiEndpoint(models.Model):
-        _inherit = "fastapi.endpoint"
+   class FastapiEndpoint(models.Model):
+       _inherit = "fastapi.endpoint"
 
-        def _get_fastapi_routers(self):
-          if self.app == "myapp":
-              return [
-                  auth_router,
-              ]
-          return super()._get_fastapi_routers()
+       def _get_fastapi_routers(self):
+         if self.app == "myapp":
+             return [
+                 auth_router,
+             ]
+         return super()._get_fastapi_routers()
 
-        def _get_app_dependencies_overrides(self):
-            res = super()._get_app_dependencies_overrides()
-            if self.app == "myapp":
-                res.update(
-                    {
-                        dependencies.authenticated_partner_impl: auth_partner_authenticated_partner,
-                    }
-                )
-            return res
+       def _get_app_dependencies_overrides(self):
+           res = super()._get_app_dependencies_overrides()
+           if self.app == "myapp":
+               res.update(
+                   {
+                       dependencies.authenticated_partner_impl: auth_partner_authenticated_partner,
+                   }
+               )
+           return res
 
-Next you can manage your authenticable partners and directories in the Odoo interface:
+Next you can manage your authenticable partners and directories in the
+Odoo interface:
 
 FastAPI > Authentication > Partner
 
@@ -81,7 +80,8 @@ and
 
 FastAPI > Authentication > Directory
 
-Next you must set the directory used for the authentication in the FastAPI endpoint:
+Next you must set the directory used for the authentication in the
+FastAPI endpoint:
 
 FastAPI > FastAPI Endpoint > myapp > Directory
 
@@ -102,7 +102,7 @@ Bug Tracker
 Bugs are tracked on `GitHub Issues <https://github.com/OCA/rest-framework/issues>`_.
 In case of trouble, please check there if your issue has already been reported.
 If you spotted it first, help us to smash it by providing a detailed and welcomed
-`feedback <https://github.com/OCA/rest-framework/issues/new?body=module:%20fastapi_auth_partner%0Aversion:%2016.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
+`feedback <https://github.com/OCA/rest-framework/issues/new?body=module:%20fastapi_auth_partner%0Aversion:%2018.0%0A%0A**Steps%20to%20reproduce**%0A-%20...%0A%0A**Current%20behavior**%0A%0A**Expected%20behavior**>`_.
 
 Do not contact contributors directly about support or help with technical issues.
 
@@ -110,20 +110,20 @@ Credits
 =======
 
 Authors
-~~~~~~~
+-------
 
 * Akretion
 
 Contributors
-~~~~~~~~~~~~
+------------
 
-* `Akretion <https://www.akretion.com>`_:
+- `Akretion <https://www.akretion.com>`__:
 
-  * Sébastien Beau
-  * Florian Mounier
+  - Sébastien Beau
+  - Florian Mounier
 
 Maintainers
-~~~~~~~~~~~
+-----------
 
 This module is maintained by the OCA.
 
@@ -135,6 +135,6 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
-This module is part of the `OCA/rest-framework <https://github.com/OCA/rest-framework/tree/16.0/fastapi_auth_partner>`_ project on GitHub.
+This module is part of the `OCA/rest-framework <https://github.com/OCA/rest-framework/tree/18.0/fastapi_auth_partner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

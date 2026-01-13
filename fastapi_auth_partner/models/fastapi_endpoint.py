@@ -3,7 +3,6 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from typing import List
 
 from odoo import fields, models
 
@@ -44,7 +43,7 @@ class FastapiEndpoint(models.Model):
         "Default to the public_api_url if not set or the odoo url if not set either."
     )
 
-    def _get_fastapi_routers(self) -> List[APIRouter]:
+    def _get_fastapi_routers(self) -> list[APIRouter]:
         routers = super()._get_fastapi_routers()
         if self.app == "demo" and self.demo_auth_method == "auth_partner":
             routers.append(auth_router)

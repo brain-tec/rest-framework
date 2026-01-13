@@ -16,7 +16,7 @@ from fastapi import Depends, status
 if sys.version_info >= (3, 9):
     from typing import Annotated
 else:
-    from typing_extensions import Annotated
+    from typing import Annotated
 
 from odoo.addons.fastapi_auth_partner.routers.auth import auth_router
 from odoo.addons.fastapi_auth_partner.schemas import AuthPartnerResponse

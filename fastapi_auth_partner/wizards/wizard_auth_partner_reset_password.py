@@ -15,4 +15,4 @@ class WizardAuthPartnerResetPassword(models.TransientModel):
     def action_reset_password(self):
         if self.fastapi_endpoint_id:
             self = self.with_context(_fastapi_endpoint_id=self.fastapi_endpoint_id.id)
-        return super(WizardAuthPartnerResetPassword, self).action_reset_password()
+        return super().action_reset_password()
