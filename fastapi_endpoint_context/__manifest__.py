@@ -4,14 +4,13 @@
 
 {
     "name": "fastapi_endpoint_context",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Provides an overridable request context for FastAPI endpoints",
     "depends": ["fastapi"],
     "website": "https://github.com/OCA/rest-framework",
     "data": [],
     "maintainers": ["paradoxxxzero"],
-    "demo": [],
     "installable": True,
     "license": "AGPL-3",
 }
