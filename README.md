@@ -21,7 +21,7 @@ Available addons
 ----------------
 addon | version | maintainers | summary
 --- | --- | --- | ---
-[base_rest](base_rest/) | 14.0.4.8.5 | <a href='https://github.com/lmignon'><img src='https://github.com/lmignon.png' width='32' height='32' style='border-radius:50%;' alt='lmignon'/></a> | Develop your own high level REST APIs for Odoo thanks to this addon.
+[base_rest](base_rest/) | 14.0.4.8.6 | <a href='https://github.com/lmignon'><img src='https://github.com/lmignon.png' width='32' height='32' style='border-radius:50%;' alt='lmignon'/></a> | Develop your own high level REST APIs for Odoo thanks to this addon.
 [base_rest_auth_api_key](base_rest_auth_api_key/) | 14.0.1.0.2 | <a href='https://github.com/lmignon'><img src='https://github.com/lmignon.png' width='32' height='32' style='border-radius:50%;' alt='lmignon'/></a> | Base Rest: Add support for the auth_api_key security policy into the openapi documentation
 [base_rest_auth_jwt](base_rest_auth_jwt/) | 14.0.1.1.0 | <a href='https://github.com/lmignon'><img src='https://github.com/lmignon.png' width='32' height='32' style='border-radius:50%;' alt='lmignon'/></a> | Base Rest: Add support for the auth_jwt security policy into the openapi documentation
 [base_rest_auth_user_service](base_rest_auth_user_service/) | 14.0.1.1.0 |  | Login/logout from session using a REST call
