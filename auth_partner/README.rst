@@ -104,6 +104,14 @@ OCA, or the Odoo Community Association, is a nonprofit organization whose
 mission is to support the collaborative development of Odoo features and
 promote its widespread use.
 
+.. |maintainer-paradoxxxzero| image:: https://github.com/paradoxxxzero.png?size=40px
+    :target: https://github.com/paradoxxxzero
+    :alt: paradoxxxzero
+
+Current `maintainer <https://odoo-community.org/page/maintainer-role>`__:
+
+|maintainer-paradoxxxzero| 
+
 This module is part of the `OCA/rest-framework <https://github.com/OCA/rest-framework/tree/18.0/auth_partner>`_ project on GitHub.
 
 You are welcome to contribute. To learn how please visit https://odoo-community.org/page/Contribute.

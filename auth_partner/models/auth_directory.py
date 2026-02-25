@@ -199,7 +199,7 @@ class AuthDirectory(models.Model):
 
         if (
             obj["action"] != action
-            or not auth_partner
+            or not auth_partner.exists()
             or auth_partner.directory_id != self
         ):
             raise UserError(self.env._("Invalid token"))

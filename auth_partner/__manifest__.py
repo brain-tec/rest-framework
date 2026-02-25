@@ -31,6 +31,7 @@
         "demo/auth_directory_demo.xml",
         "demo/auth_partner_demo.xml",
     ],
+    "maintainers": ["paradoxxxzero"],
     "external_dependencies": {
         "python": ["itsdangerous", "pyjwt"],
     },
