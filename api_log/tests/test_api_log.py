@@ -50,6 +50,37 @@ class TestAPILog(Common):
 
     def test_log_exception(self):
         log = self.log_model.create({})
-        log.log_exception(Exception())
+
+        with self._mock_request_exc_handling(self.env):
+            log.log_exception(Exception())
 
         self.assertEqual(log.response_headers["API-Log-Entry-ID"], str(log.id))
+
+    def test_log_exception_readonly_headers(self):
+        """
+        If the exception's headers are readonly,
+        they can be logged.
+        """
+        # Arrange
+        log = self.log_model.create({})
+        exc_headers = {
+            "answer": 42,
+        }
+
+        class ReadOnlyException(Exception):
+            @property
+            def headers(self):
+                return exc_headers.copy()
+
+        ro_exception = ReadOnlyException()
+        # pre-condition
+        with self.assertRaises(AttributeError) as ae:
+            ro_exception.headers = dict()
+        self.assertIn("can't set attribute", str(ae.exception))
+
+        # Act
+        with self._mock_request_exc_handling(self.env):
+            log.log_exception(ro_exception)
+
+        # Assert
+        self.assertLess(exc_headers.items(), log.response_headers.items())
