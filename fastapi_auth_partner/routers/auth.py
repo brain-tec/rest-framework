@@ -3,18 +3,12 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import sys
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated
-else:
-    from typing import Annotated
-
 from datetime import datetime, timedelta, timezone
+from typing import Annotated
 
 from itsdangerous import URLSafeTimedSerializer
 
-from odoo import _, fields, models, tools
+from odoo import fields, models, tools
 from odoo.api import Environment
 from odoo.exceptions import ValidationError
 
@@ -157,23 +151,34 @@ class AuthService(models.AbstractModel):
     directory_id = fields.Many2one("auth.directory")
 
     def new(self, vals, **kwargs):
+        # As we are in an abstract model, we need to bypass cache since it's
+        # based on the record id (and there is none)
+        endpoint = vals.pop("endpoint_id")
+
         rec = super().new(vals, **kwargs)
         # Can't have computed / related field in AbstractModel
+        rec.endpoint_id = endpoint
         rec.directory_id = rec.endpoint_id.directory_id
         # Auto add endpoint context for mail context
-        return rec.with_context(_fastapi_endpoint_id=vals["endpoint_id"].id)
+        return rec.with_context(_fastapi_endpoint_id=endpoint.id)
 
     def _get_auth_from_partner(self, partner):
         return partner._get_auth_partner_for_directory(self.directory_id)
 
     def _signup(self, data):
         auth_partner = (
-            self.env["auth.partner"].sudo()._signup(self.directory_id, **data.dict())
+            self.env["auth.partner"]
+            .sudo()
+            ._signup(self.directory_id, **data.model_dump())
         )
         return auth_partner
 
     def _login(self, data):
-        return self.env["auth.partner"].sudo()._login(self.directory_id, **data.dict())
+        return (
+            self.env["auth.partner"]
+            .sudo()
+            ._login(self.directory_id, **data.model_dump())
+        )
 
     def _impersonate(self, token):
         return self.env["auth.partner"].sudo()._impersonating(self.directory_id, token)
@@ -224,7 +229,7 @@ class AuthService(models.AbstractModel):
     def _prepare_cookie(self, partner):
         secret = self.directory_id.cookie_secret_key or self.directory_id.secret_key
         if not secret:
-            raise ValidationError(_("No cookie secret key defined"))
+            raise ValidationError(self.env._("No cookie secret key defined"))
         payload = self._prepare_cookie_payload(partner)
         value = URLSafeTimedSerializer(secret).dumps(payload)
         exp = (

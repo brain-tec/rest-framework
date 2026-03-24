@@ -4,22 +4,17 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import json
-import sys
+from typing import Annotated
 
 from odoo import tests
+from odoo.tools import mute_logger
 
 from odoo.addons.base.models.res_partner import Partner
 from odoo.addons.fastapi_auth_partner.dependencies import AuthPartner
-
-from fastapi import Depends, status
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated
-else:
-    from typing import Annotated
-
 from odoo.addons.fastapi_auth_partner.routers.auth import auth_router
 from odoo.addons.fastapi_auth_partner.schemas import AuthPartnerResponse
+
+from fastapi import Depends, status
 
 
 @auth_router.get("/auth/whoami-public-or-partner")
@@ -48,6 +43,7 @@ class TestEndToEnd(tests.HttpCase):
         return self.url_open(
             "/fastapi_auth_partner_demo/auth/register",
             timeout=1000,
+            headers={"Content-Type": "application/json"},
             data=json.dumps(
                 {
                     "name": "Loriot",
@@ -75,6 +71,7 @@ class TestEndToEnd(tests.HttpCase):
             {"login": "loriot@example.org", "mail_verified": False},
         )
 
+    @mute_logger("odoo.http", "odoo.addons.base.models.assetsbundle")
     def test_profile_forbidden(self):
         """A end-to-end test with negative authentication."""
         resp = self.url_open("/fastapi_auth_partner_demo/auth/profile")

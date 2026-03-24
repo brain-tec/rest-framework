@@ -3,8 +3,7 @@
 # License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
 
 import logging
-import sys
-from typing import Any
+from typing import Annotated, Any
 
 from itsdangerous import URLSafeTimedSerializer
 from starlette.status import HTTP_401_UNAUTHORIZED
@@ -16,11 +15,6 @@ from odoo.addons.fastapi.dependencies import fastapi_endpoint, odoo_env
 from odoo.addons.fastapi.models import FastapiEndpoint
 
 from fastapi import Cookie, Depends, HTTPException, Request, Response
-
-if sys.version_info >= (3, 9):
-    from typing import Annotated
-else:
-    from typing import Annotated
 
 _logger = logging.getLogger(__name__)
 

@@ -2,7 +2,6 @@
 # @author Sébastien BEAU <sebastien.beau@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-import json
 from contextlib import contextmanager
 from functools import partial
 
@@ -45,13 +44,11 @@ class CommonTestAuth(FastAPITransactionCase):
         with self._create_test_client() as test_client, self.new_mails() as new_mails:
             response: Response = test_client.post(
                 "/auth/register",
-                content=json.dumps(
-                    {
-                        "name": "Loriot",
-                        "login": "loriot@example.org",
-                        "password": "supersecret",
-                    }
-                ),
+                json={
+                    "name": "Loriot",
+                    "login": "loriot@example.org",
+                    "password": "supersecret",
+                },
             )
         self.assertEqual(response.status_code, status.HTTP_201_CREATED, response.text)
         return response, new_mails
@@ -59,12 +56,10 @@ class CommonTestAuth(FastAPITransactionCase):
     def _login(self, test_client, password="supersecret"):
         response: Response = test_client.post(
             "/auth/login",
-            content=json.dumps(
-                {
-                    "login": "loriot@example.org",
-                    "password": password,
-                }
-            ),
+            json={
+                "login": "loriot@example.org",
+                "password": password,
+            },
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.text)
         return response
@@ -105,7 +100,7 @@ class TestFastapiAuthPartner(CommonTestAuth, CommonTestAuthPartner):
         with self._create_test_client() as test_client, self.new_mails() as new_mails:
             response: Response = test_client.post(
                 "/auth/request_reset_password",
-                content=json.dumps({"login": "loriot@example.org"}),
+                json={"login": "loriot@example.org"},
             )
             self.assertEqual(response.status_code, status.HTTP_200_OK, response.text)
             self.assertFalse(
@@ -121,12 +116,10 @@ class TestFastapiAuthPartner(CommonTestAuth, CommonTestAuthPartner):
             token = str(new_mails.body).split("token=")[1].split('">')[0]
             response: Response = test_client.post(
                 "/auth/set_password",
-                content=json.dumps(
-                    {
-                        "password": "megasecret",
-                        "token": token,
-                    }
-                ),
+                json={
+                    "password": "megasecret",
+                    "token": token,
+                },
             )
             self.assertEqual(response.status_code, status.HTTP_200_OK, response.text)
 
@@ -155,7 +148,7 @@ class TestFastapiAuthPartner(CommonTestAuth, CommonTestAuthPartner):
         with self._create_test_client() as test_client:
             response: Response = test_client.post(
                 "/auth/validate_email",
-                content=json.dumps({"token": token}),
+                json={"token": token},
             )
         self.assertEqual(response.status_code, status.HTTP_200_OK, response.text)
 

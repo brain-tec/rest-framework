@@ -3,7 +3,7 @@
 # @author Florian Mounier <florian.mounier@akretion.com>
 # License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl).
 
-from odoo import _, models
+from odoo import models
 from odoo.exceptions import AccessDenied, UserError
 from odoo.http import request
 
@@ -16,11 +16,13 @@ class AuthPartner(models.Model):
         self.ensure_one()
 
         if not self.env.user._is_admin():
-            raise AccessDenied(_("Only admin can impersonate locally"))
+            raise AccessDenied(self.env._("Only admin can impersonate locally"))
 
         if not hasattr(request, "future_response"):
             raise UserError(
-                _("Please install base_future_response for local impersonate to work")
+                self.env._(
+                    "Please install base_future_response for local impersonate to work"
+                )
             )
 
         for endpoint in self.directory_id.fastapi_endpoint_ids:
@@ -31,8 +33,8 @@ class AuthPartner(models.Model):
             "type": "ir.actions.client",
             "tag": "display_notification",
             "params": {
-                "title": _("Impersonation successful"),
-                "message": _("You are now impersonating %s\n%%s") % self.login,
+                "title": self.env._("Impersonation successful"),
+                "message": self.env._("You are now impersonating %s\n%%s") % self.login,
                 "links": [
                     {
                         "label": f"{endpoint.app.title()} api docs",

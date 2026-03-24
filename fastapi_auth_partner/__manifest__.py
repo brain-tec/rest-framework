@@ -6,7 +6,7 @@
 {
     "name": "Fastapi Auth Partner",
     "summary": """This provides an implementation of auth_partner for FastAPI""",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "license": "AGPL-3",
     "author": "Akretion,Odoo Community Association (OCA)",
     "website": "https://github.com/OCA/rest-framework",
@@ -16,6 +16,7 @@
     ],
     "data": [
         "security/res_group.xml",
+        "security/ir_rule.xml",
         "security/ir.model.access.csv",
         "views/auth_partner_view.xml",
         "views/auth_directory_view.xml",

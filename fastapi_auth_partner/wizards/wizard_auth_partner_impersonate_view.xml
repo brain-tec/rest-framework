@@ -7,7 +7,6 @@
               Please choose an endpoint:
                 <group>
                 <field name="auth_partner_id" readonly="1" />
-                <field name="auth_directory_id" invisible="1" />
                 <field
                     name="fastapi_endpoint_id"
                     domain="[('directory_id', '=', auth_directory_id)]"
