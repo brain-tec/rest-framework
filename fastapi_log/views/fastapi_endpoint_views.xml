@@ -18,12 +18,8 @@
                     type="object"
                     name="action_logs"
                     icon="fa-book"
-                    attrs="{
-                        'invisible': [
-                            ('log_ids', '=', []),
-                        ],
-                    }"
                     groups="api_log.group_api_log"
+                    invisible="not log_ids"
                 >
                     <div class="o_stat_info">
                         <span class="o_stat_text">Logs</span>

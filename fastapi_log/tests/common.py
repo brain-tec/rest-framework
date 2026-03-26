@@ -38,6 +38,7 @@ class Common(CommonAPILog):
         reg = self.env.registry
         reg.test_log_cr.rollback()
         reg.test_log_cr.close()
+        reg.test_log_cr._cursor.close()
         reg.test_log_cr = None
         reg.test_log_lock = None
         super().tearDown()
@@ -55,6 +56,6 @@ class Common(CommonAPILog):
         log_env = self._get_log_env()
         with RecordCapturer(
             log_env[self.log_model._name],
-            [("collection_ref", "=", "%s,%s" % (app._name, app.id))],
+            [("collection_ref", "=", f"{app._name},{app.id}")],
         ) as capturer:
             yield capturer

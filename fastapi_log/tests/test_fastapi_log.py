@@ -6,6 +6,8 @@
 import os
 import unittest
 
+from odoo.tools import mute_logger
+
 from odoo.addons.fastapi.schemas import DemoExceptionType
 from odoo.addons.fastapi_log.tests.common import Common
 
@@ -36,7 +38,7 @@ class TestFastapiLog(Common):
         self.assertTrue(log.time > 0)
 
     def test_log_exception(self):
-        with self.log_capturer() as capturer:
+        with self.log_capturer() as capturer, mute_logger("odoo.http"):
             route = (
                 "/fastapi_demo/test/demo/exception?"
                 f"exception_type={DemoExceptionType.user_error.value}"
@@ -58,7 +60,7 @@ class TestFastapiLog(Common):
         self.assertIn("odoo.exceptions.UserError: User Error\n", log.stack_trace)
 
     def test_log_bare_exception(self):
-        with self.log_capturer() as capturer:
+        with self.log_capturer() as capturer, mute_logger("odoo.http"):
             route = (
                 "/fastapi_demo/test/demo/exception?"
                 f"exception_type={DemoExceptionType.bare_exception.value}"
@@ -91,8 +93,9 @@ class TestFastapiLog(Common):
                 response.json(), {"retries": nbr_retries, "file": "test"}
             )
 
-        self.assertEqual(len(capturer.records), 3)
-        for log in capturer.records[1:]:
+        logs = capturer.records.sorted()
+        self.assertEqual(len(logs), 3)
+        for log in logs[1:]:
             self.assertIn("/fastapi_demo/test/demo/retrying", log.request_url)
             self.assertEqual(log.request_method, "POST")
             self.assertEqual(log.response_status_code, 500)
@@ -100,11 +103,12 @@ class TestFastapiLog(Common):
             self.assertTrue(log.response_body)
             self.assertIn(b"fake error", log.response_body)
             self.assertIn(
-                "odoo.addons.fastapi.routers.demo_router.FakeConcurrentUpdateError: fake error",
+                "odoo.addons.fastapi.routers.demo_router.FakeConcurrentUpdateError: "
+                "fake error",
                 log.stack_trace,
             )
 
-        log = capturer.records[0]
+        log = logs[0]
         self.assertIn("/fastapi_demo/test/demo/retrying", log.request_url)
         self.assertEqual(log.request_method, "POST")
         self.assertEqual(log.response_status_code, 200)
