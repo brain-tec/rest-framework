@@ -6,6 +6,7 @@
 import requests
 
 from odoo.http import Request, Response
+from odoo.tests import HOST
 
 from odoo.addons.api_log.tests.common import Common
 
@@ -25,6 +26,7 @@ class TestAPILog(Common):
             url=base_url,
             method="GET",
         )
+        httprequest.remote_addr = HOST
         request = Request(httprequest)
         log = self.log_model.log_request(request)
 
