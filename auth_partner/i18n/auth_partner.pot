@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -37,7 +37,7 @@ msgstr ""
 #: model:mail.template,body_html:auth_partner.email_reset_password
 msgid ""
 "<div>\n"
-"            Hi <t t-out=\"object.partner_id.name or ''\"></t>\n"
+"            Hi <t t-out=\"object.partner_id.name or ''\"/>\n"
 "            Click on the following link to reset your password\n"
 "            <a t-attf-href=\"https://example.org/password/reset?token={{ object.env.context['token']}}\" target=\"_blank\" style=\"color:#FFFFFF; text-decoration:none;\">Reset Password</a>\n"
 "            </div>\n"
@@ -48,7 +48,7 @@ msgstr ""
 #: model:mail.template,body_html:auth_partner.email_validate_email
 msgid ""
 "<div>\n"
-"            Hi <t t-out=\"object.partner_id.name or ''\"></t>\n"
+"            Hi <t t-out=\"object.partner_id.name or ''\"/>\n"
 "            Welcome to the site, please click on the following link to verify your email\n"
 "            <a t-attf-href=\"https://example.org/email/validate?token={{ object.env.context['token']}}\" target=\"_blank\" style=\"color:#FFFFFF; text-decoration:none;\">Validate Email</a>\n"
 "            </div>\n"
@@ -59,12 +59,18 @@ msgstr ""
 #: model:mail.template,body_html:auth_partner.email_set_password
 msgid ""
 "<div>\n"
-"            Hi <t t-out=\"object.partner_id.name or ''\"></t>\n"
+"            Hi <t t-out=\"object.partner_id.name or ''\"/>\n"
 "            Welcome, your account have been created\n"
 "            Click on the following link to set your password\n"
 "            <a t-attf-href=\"https://example.org/password/reset?token={{ object.env.context['token']}}\" target=\"_blank\" style=\"color:#FFFFFF; text-decoration:none;\">Set Password</a>\n"
 "            </div>\n"
 "        "
+msgstr ""
+
+#. module: auth_partner
+#: model_terms:ir.ui.view,arch_db:auth_partner.auth_directory_view_form
+#: model_terms:ir.ui.view,arch_db:auth_partner.view_partner_form
+msgid "<span class=\"o_stat_text\">Accounts</span>"
 msgstr ""
 
 #. module: auth_partner
@@ -75,12 +81,6 @@ msgstr ""
 #. module: auth_partner
 #: model:res.groups,name:auth_partner.group_auth_partner_manager
 msgid "API Partner Auth Manager"
-msgstr ""
-
-#. module: auth_partner
-#: model_terms:ir.ui.view,arch_db:auth_partner.auth_directory_view_form
-#: model_terms:ir.ui.view,arch_db:auth_partner.view_partner_form
-msgid "Account"
 msgstr ""
 
 #. module: auth_partner
@@ -230,7 +230,6 @@ msgstr ""
 #. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/models/auth_partner.py:0
-#, python-format
 msgid ""
 "Email address not validated. Validate your email address by clicking on the "
 "link in the email sent to you or request a new password. "
@@ -293,23 +292,18 @@ msgstr ""
 #. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/models/auth_partner.py:0
-#, python-format
 msgid "Invalid Login or Password"
 msgstr ""
 
 #. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/models/auth_directory.py:0
-#: code:addons/auth_partner/models/auth_directory.py:0
-#: code:addons/auth_partner/models/auth_directory.py:0
-#, python-format
 msgid "Invalid Token"
 msgstr ""
 
 #. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/models/auth_directory.py:0
-#, python-format
 msgid "Invalid token"
 msgstr ""
 
@@ -317,14 +311,6 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:auth_partner.wizard_auth_partner_force_set_password_view_form
 #: model_terms:ir.ui.view,arch_db:auth_partner.wizard_auth_partner_reset_password_view_form
 msgid "Label"
-msgstr ""
-
-#. module: auth_partner
-#: model:ir.model.fields,field_description:auth_partner.field_auth_directory____last_update
-#: model:ir.model.fields,field_description:auth_partner.field_auth_partner____last_update
-#: model:ir.model.fields,field_description:auth_partner.field_wizard_auth_partner_force_set_password____last_update
-#: model:ir.model.fields,field_description:auth_partner.field_wizard_auth_partner_reset_password____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: auth_partner
@@ -395,16 +381,14 @@ msgstr ""
 
 #. module: auth_partner
 #. odoo-python
-#: code:addons/auth_partner/wizards/wizard_auth_partner_force_set_password.py:0
-#, python-format
-msgid "No id in context"
+#: code:addons/auth_partner/models/auth_directory.py:0
+msgid "No email template defined for %(template)s in %(directory)s"
 msgstr ""
 
 #. module: auth_partner
 #. odoo-python
-#: code:addons/auth_partner/models/auth_directory.py:0
-#, python-format
-msgid "No email template defined for %(template)s in %(directory)s"
+#: code:addons/auth_partner/wizards/wizard_auth_partner_force_set_password.py:0
+msgid "No id in context"
 msgstr ""
 
 #. module: auth_partner
@@ -443,7 +427,6 @@ msgstr ""
 #. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/wizards/wizard_auth_partner_force_set_password.py:0
-#, python-format
 msgid "Password and Confirm Password must be the same"
 msgstr ""
 
@@ -463,13 +446,8 @@ msgid "Secret Key"
 msgstr ""
 
 #. module: auth_partner
-#: model:ir.model.fields,field_description:auth_partner.field_auth_directory__secret_key_env_default
+#: model:ir.model.fields,field_description:auth_partner.field_auth_directory__x_secret_key_env_default
 msgid "Secret Key Env Default"
-msgstr ""
-
-#. module: auth_partner
-#: model:ir.model.fields,field_description:auth_partner.field_auth_directory__secret_key_env_is_editable
-msgid "Secret Key Env Is Editable"
 msgstr ""
 
 #. module: auth_partner
@@ -523,13 +501,6 @@ msgid ""
 msgstr ""
 
 #. module: auth_partner
-#. odoo-python
-#: code:addons/auth_partner/wizards/wizard_auth_partner_force_set_password.py:0
-#, python-format
-msgid "This wizard can only be used on auth.partner"
-msgstr ""
-
-#. module: auth_partner
 #: model:ir.model.fields,field_description:auth_partner.field_auth_partner__user_can_impersonate
 msgid "User Can Impersonate"
 msgstr ""
@@ -547,8 +518,12 @@ msgid "Wizard Partner Auth Reset Password"
 msgstr ""
 
 #. module: auth_partner
+#: model:ir.model.fields,field_description:auth_partner.field_auth_directory__x_secret_key_env_is_editable
+msgid "X Secret Key Env Is Editable"
+msgstr ""
+
+#. module: auth_partner
 #. odoo-python
 #: code:addons/auth_partner/models/auth_partner.py:0
-#, python-format
 msgid "You are not allowed to impersonate this user"
 msgstr ""
