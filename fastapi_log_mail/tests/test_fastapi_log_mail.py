@@ -6,6 +6,8 @@
 import os
 import unittest
 
+from odoo.tools import mute_logger
+
 from odoo.addons.fastapi.schemas import DemoExceptionType
 from odoo.addons.fastapi_log.tests.common import Common
 from odoo.addons.mail.tests.common import MailCase
@@ -50,7 +52,7 @@ class TestFastapiLogMail(Common, MailCase):
         self.assertTrue(activity_type)
 
         # Act
-        with self.log_capturer() as capturer:
+        with self.log_capturer() as capturer, mute_logger("odoo.http"):
             response = self.url_open(route, timeout=200)
 
         # Assert
@@ -76,7 +78,7 @@ class TestFastapiLogMail(Common, MailCase):
         self.assertTrue(mail_template)
 
         # Act
-        with self.mock_mail_gateway():
+        with self.mock_mail_gateway(), mute_logger("odoo.http"):
             self.url_open(route, timeout=200)
 
         # Assert

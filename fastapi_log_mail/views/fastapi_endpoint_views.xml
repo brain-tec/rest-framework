@@ -13,20 +13,12 @@
                 <field
                     name="api_log_mail_exception_activity_type_id"
                     groups="api_log.group_api_log"
-                    attrs="{
-                        'invisible': [
-                            ('log_requests', '=', False),
-                        ],
-                    }"
+                    invisible="not log_requests"
                 />
                 <field
                     name="api_log_mail_exception_template_id"
                     groups="api_log.group_api_log"
-                    attrs="{
-                        'invisible': [
-                            ('log_requests', '=', False),
-                        ],
-                    }"
+                    invisible="not log_requests"
                 />
             </field>
         </field>
