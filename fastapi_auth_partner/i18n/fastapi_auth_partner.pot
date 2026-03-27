@@ -4,7 +4,7 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.0\n"
+"Project-Id-Version: Odoo Server 18.0\n"
 "Report-Msgid-Bugs-To: \n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -122,7 +122,6 @@ msgstr ""
 #. module: fastapi_auth_partner
 #. odoo-python
 #: code:addons/fastapi_auth_partner/models/auth_partner.py:0
-#, python-format
 msgid "Impersonation successful"
 msgstr ""
 
@@ -139,11 +138,6 @@ msgstr ""
 #. module: fastapi_auth_partner
 #: model_terms:ir.ui.view,arch_db:fastapi_auth_partner.wizard_auth_partner_impersonate_view_form
 msgid "Label"
-msgstr ""
-
-#. module: fastapi_auth_partner
-#: model:ir.model.fields,field_description:fastapi_auth_partner.field_wizard_auth_partner_impersonate____last_update
-msgid "Last Modified on"
 msgstr ""
 
 #. module: fastapi_auth_partner
@@ -164,14 +158,12 @@ msgstr ""
 #. module: fastapi_auth_partner
 #. odoo-python
 #: code:addons/fastapi_auth_partner/routers/auth.py:0
-#, python-format
 msgid "No cookie secret key defined"
 msgstr ""
 
 #. module: fastapi_auth_partner
 #. odoo-python
 #: code:addons/fastapi_auth_partner/models/auth_partner.py:0
-#, python-format
 msgid "Only admin can impersonate locally"
 msgstr ""
 
@@ -193,7 +185,6 @@ msgstr ""
 #. module: fastapi_auth_partner
 #. odoo-python
 #: code:addons/fastapi_auth_partner/models/auth_partner.py:0
-#, python-format
 msgid "Please install base_future_response for local impersonate to work"
 msgstr ""
 
@@ -256,7 +247,6 @@ msgstr ""
 #. module: fastapi_auth_partner
 #. odoo-python
 #: code:addons/fastapi_auth_partner/models/auth_partner.py:0
-#, python-format
 msgid ""
 "You are now impersonating %s\n"
 "%%s"
