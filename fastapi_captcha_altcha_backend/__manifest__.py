@@ -4,7 +4,7 @@
 
 {
     "name": "Fastapi Captcha Altcha Backend",
-    "version": "16.0.1.0.0",
+    "version": "18.0.1.0.0",
     "author": "Akretion, Odoo Community Association (OCA)",
     "summary": "Implement Altcha server in FastAPI",
     "category": "Tools",
@@ -12,7 +12,6 @@
     "website": "https://github.com/OCA/rest-framework",
     "data": [],
     "maintainers": ["paradoxxxzero"],
-    "demo": [],
     "installable": True,
     "license": "AGPL-3",
     "external_dependencies": {
