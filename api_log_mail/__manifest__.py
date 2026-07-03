@@ -3,7 +3,7 @@
 
 {
     "name": "API Log notification",
-    "version": "16.0.1.0.1",
+    "version": "16.0.1.0.2",
     "license": "AGPL-3",
     "author": "PyTech, Odoo Community Association (OCA)",
     "maintainers": [
